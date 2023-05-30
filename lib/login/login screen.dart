@@ -1,6 +1,9 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/register%20screen/register%20screen.dart';
 import 'package:todo_app/register%20screen/validation%20Email.dart';
+import 'package:todo_app/shared/components/dialog/dialog%20utils.dart';
 import '../shared/components/TextFormField/custom_form_field.dart';
 class LoginScreen extends StatefulWidget {
   static String routeName = "LoginScreen";
@@ -94,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height*.07,),
                   ElevatedButton(onPressed: (){
-                    createAccount();
+                    login();
                   }, child: Container(
                    child: Row(
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -124,7 +127,24 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-  void createAccount(){
-    formKey.currentState?.validate();
+  void login()async{
+    if(formKey.currentState?.validate() == false)return;
+    try {
+      DialogUtils.dialogLoading(context);
+      var credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text
+      );
+      DialogUtils.hideDialog(context);
+      DialogUtils.showMessage(context: context,title: "Registration Successful",message: "Do you want to go to the home screen",dialogType: DialogType.success);
+    } on FirebaseAuthException catch (e) {
+      DialogUtils.hideDialog(context);
+      if (e.code == 'user-not-found') {
+        DialogUtils.showMessage(context: context,title: "User Not Found", message: 'No user found for that email.', dialogType: DialogType.warning,nigActionName: "Cancel");
+      } else if (e.code == 'wrong-password') {
+        Text('Wrong password provided for that user.');
+        DialogUtils.showMessage(context: context,title: "wrong password", message: 'Wrong password provided for that user.', dialogType: DialogType.warning,nigActionName: "Cancel");
+      }
+    }
   }
 }
