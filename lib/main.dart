@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/register%20screen/register%20screen.dart';
 
+import 'login/login screen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -12,9 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
+        LoginScreen.routeName:(context)=>LoginScreen(),
         RegisterScreen.routeName:(context)=>RegisterScreen(),
       },
-      initialRoute: RegisterScreen.routeName,
+      initialRoute: LoginScreen.routeName,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.transparent,
@@ -29,6 +32,14 @@ class MyApp extends StatelessWidget {
                fontWeight: FontWeight.bold
              ),
       ),
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(
+            fontWeight: FontWeight.w800,
+            fontSize: 23,
+            fontFamily: "Poppins",
+            color: Colors.black
+          )
+        )
       ),
     );
   }

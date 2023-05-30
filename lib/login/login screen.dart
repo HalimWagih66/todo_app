@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/login/login%20screen.dart';
+import 'package:todo_app/register%20screen/register%20screen.dart';
 import 'package:todo_app/register%20screen/validation%20Email.dart';
 import '../shared/components/TextFormField/custom_form_field.dart';
-class RegisterScreen extends StatefulWidget {
-  static String routeName = "RegisterScreen";
+class LoginScreen extends StatefulWidget {
+  static String routeName = "LoginScreen";
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   bool isHidePassword = true;
 
   IconData eyePassword = Icons.remove_red_eye;
 
-  TextEditingController fullNameController = TextEditingController();
 
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
 
-  TextEditingController passwordConfirmationController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
   @override
@@ -43,28 +41,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Form(
               key: formKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height*0.25,
+                    height: MediaQuery.of(context).size.height*0.27,
                   ),
-                  CustomFormField(
-                      textLabel: "Full Name",
-                    inputField: fullNameController,
-                    functionValidate: (text){
-                        if(text?.isEmpty == true || text?.trim().isEmpty == true){
-                          return "Please Enter Name";
-                        }
-                        if(text?.contains(" ") == false){
-                          return "Please enter at least the binary name";
-                        }
-                    },
-                    BorderField: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue,style: BorderStyle.solid,width: 2)
-                    ),
-                    prefix_Icon: Icons.person,
-                  ),
+                  Text("Welcome Back!",style: Theme.of(context).textTheme.bodyLarge),
                   SizedBox(
-                    height: 15,
+                    height: MediaQuery.of(context).size.height*0.04,
                   ),
                   CustomFormField(
                     textLabel: "E-mail Address",
@@ -108,32 +92,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     suffix_Icon: eyePassword,
                     obscure_Text: isHidePassword,
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  CustomFormField(
-                    textLabel: "Confirm Password",
-                    inputField: passwordConfirmationController,
-                    functionValidate: (text){
-                      if(text == null || text?.isEmpty == true || text?.trim().isEmpty == true){
-                        return "Please Enter Confirm Password";
-                      }
-                      if(text != passwordController.text){
-                        return "This password does not match the main password";
-                      }
-                    },
-                    BorderField: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue,style: BorderStyle.solid,width: 1)
-                    ),
-                    onPressedsuffix_Icon: (){
-                      isHidePassword = !isHidePassword;
-                      eyePassword  = isHidePassword == true ? Icons.remove_red_eye:Icons.remove_red_eye_outlined;
-                      setState(() {});
-                    },
-                    prefix_Icon: Icons.password,
-                    suffix_Icon: eyePassword,
-                    obscure_Text: isHidePassword,
-                  ),
                   SizedBox(height: MediaQuery.of(context).size.height*.07,),
                   ElevatedButton(onPressed: (){
                     createAccount();
@@ -141,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                    child: Row(
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
-                       Text("Create Account",style: TextStyle(color: Colors.grey,fontSize: 18)),
+                       Text("Login",style: TextStyle(color: Colors.grey,fontSize: 18)),
                        Icon(Icons.arrow_forward_outlined,color: Colors.grey),
                      ],
                    ),
@@ -156,8 +114,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   TextButton(onPressed: (){
-                    Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-                  }, child: Text("I already have an account")),
+                    Navigator.pushReplacementNamed(context, RegisterScreen.routeName);
+                  }, child: Center(child: Text("I don't have an account",textAlign: TextAlign.center,))),
                 ],
               ),
             ),
