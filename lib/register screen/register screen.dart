@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/database/models/user.dart' as MyUser;
 import 'package:todo_app/login/login%20screen.dart';
 import 'package:todo_app/provider/auth_provider.dart';
@@ -45,7 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Create Account"),
+          title: Text(AppLocalizations.of(context)!.create_account),
         ),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 10),
@@ -61,16 +62,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         .height * 0.25,
                   ),
                   CustomFormField(
-                    textLabel: "Full Name",
+                    textLabel: AppLocalizations.of(context)!.full_name,
                     inputField: fullNameController,
                     functionValidate: (text) {
                       if (text?.isEmpty == true || text
                           ?.trim()
                           .isEmpty == true) {
-                        return "Please Enter Name";
+                        return AppLocalizations.of(context)!.please_enter_your_name;
                       }
                       if (text?.contains(" ") == false) {
-                        return "Please enter at least the binary name";
+                        return AppLocalizations.of(context)!.please_enter_at_least_the_binary_name;
                       }
                     },
                     BorderField: UnderlineInputBorder(
@@ -84,16 +85,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 15,
                   ),
                   CustomFormField(
-                    textLabel: "E-mail Address",
+                    textLabel: AppLocalizations.of(context)!.email_address,
                     inputField: emailController,
                     functionValidate: (text) {
                       if (text?.isEmpty == true || text
                           ?.trim()
                           .isEmpty == true) {
-                        return "Please Enter E-mail Address";
+                        return AppLocalizations.of(context)!.please_enter_email_address;
                       }
                       if (!ValidationEmail.isEmail(text!)) {
-                        return "Please enter the email correctly";
+                        return AppLocalizations.of(context)!.please_enter_the_email_correctly;
                       }
                     },
                     BorderField: UnderlineInputBorder(
@@ -107,16 +108,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 15,
                   ),
                   CustomFormField(
-                    textLabel: "Password",
+                    textLabel: AppLocalizations.of(context)!.password,
                     inputField: passwordController,
                     functionValidate: (text) {
                       if (text == null || text?.isEmpty == true || text
                           ?.trim()
                           .isEmpty == true) {
-                        return "Please Enter Password";
+                        return AppLocalizations.of(context)!.please_enter_password;
                       }
                       if (text!.length < 6) {
-                        return "Please enter a password that is more than 6 digits";
+                        return AppLocalizations.of(context)!.please_enter_a_password_that_is_more_than_6_digits;
                       }
                     },
                     BorderField: UnderlineInputBorder(
@@ -139,16 +140,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 15,
                   ),
                   CustomFormField(
-                    textLabel: "Confirm Password",
+                    textLabel: AppLocalizations.of(context)!.confirm_password,
                     inputField: passwordConfirmationController,
                     functionValidate: (text) {
                       if (text == null || text?.isEmpty == true || text
                           ?.trim()
                           .isEmpty == true) {
-                        return "Please Enter Confirm Password";
+                        return AppLocalizations.of(context)!.please_enter_Confirm_password;
                       }
                       if (text != passwordController.text) {
-                        return "This password does not match the main password";
+                        return AppLocalizations.of(context)!.this_password_does_not_match_the_main_password;
                       }
                     },
                     BorderField: UnderlineInputBorder(
@@ -177,7 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Create Account",
+                        Text(AppLocalizations.of(context)!.create_account,
                             style: TextStyle(color: Colors.grey, fontSize: 18)),
                         Icon(Icons.arrow_forward_outlined, color: Colors.grey),
                       ],
@@ -196,7 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextButton(onPressed: () {
                     Navigator.pushReplacementNamed(
                         context, LoginScreen.routeName);
-                  }, child: Text("I already have an account")),
+                  }, child: Text(AppLocalizations.of(context)!.i_already_have_an_account)),
                 ],
               ),
             ),
@@ -221,18 +222,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       authProvider.updateUser(user);
       DialogUtils.hideDialog(context);
       DialogUtils.showMessage(
-          context: context,message:  "Your account has been successfully registered",
-          dialogType: DialogType.success, posActionName: "Ok", posAction: () {
+          context: context,message:  AppLocalizations.of(context)!.your_account_has_been_successfully_registered,
+          dialogType: DialogType.success, posActionName: AppLocalizations.of(context)!.ok, posAction: () {
         Navigator.pushReplacementNamed(context, LoginScreen.routeName);
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        DialogUtils.showMessage(context: context,title: "weak password",message: "The password provided is too weak.",dialogType: DialogType.error);
+        DialogUtils.showMessage(context: context,title: AppLocalizations.of(context)!.weak_password,message: AppLocalizations.of(context)!.the_password_provided_is_too_weak,dialogType: DialogType.error);
       } else if (e.code == 'email-already-in-use') {
-        DialogUtils.showMessage(context: context,title: "Email",message: "The account already exists for that email.",dialogType: DialogType.error);
+        DialogUtils.showMessage(context: context,title: AppLocalizations.of(context)!.email_address,message: AppLocalizations.of(context)!.the_account_already_exists_for_that_email,dialogType: DialogType.error);
       }
     } catch (e) {
-      DialogUtils.showMessage(context: context,title: "something went error",message: e.toString(),dialogType: DialogType.error);
+      DialogUtils.showMessage(context: context,title: AppLocalizations.of(context)!.something_went_error,message: e.toString(),dialogType: DialogType.error);
     }
   }
 }

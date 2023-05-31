@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/layout%20screen/settings%20tap/settings_tap.dart';
 import 'package:todo_app/layout%20screen/todos_list/show%20bottom%20sheet.dart';
 import 'package:todo_app/layout%20screen/todos_list/todosList_tap.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = "HomeScreen";
@@ -16,12 +17,12 @@ class _HomeScreenState extends State<HomeScreen> {
     TodosList_Tap(),
     SettingsTap(),
   ];
-  List<String> titleTaps = [
-    "TO Do List",
-    "Settings",
-  ];
   @override
   Widget build(BuildContext context) {
+    List<String> titleTaps = [
+      AppLocalizations.of(context)!.to_do_list,
+      AppLocalizations.of(context)!.settings,
+    ];
     return Scaffold(
       backgroundColor: Color(0xffDFECDB),
       appBar: AppBar(

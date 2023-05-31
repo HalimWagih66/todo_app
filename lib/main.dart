@@ -1,4 +1,4 @@
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +8,7 @@ import 'package:todo_app/splash%20screen/splash%20screen.dart';
 import 'firebase_options.dart';
 import 'layout screen/home screen.dart';
 import 'login/login screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,17 @@ class MyApp extends StatelessWidget {
         SplashScreen.routeName:(context)=>SplashScreen(),
       },
       initialRoute: SplashScreen.routeName,
+      localizationsDelegates: [
+        AppLocalizations.delegate, // Add this line
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('ar'), // arabic
+      ],
+      locale: Locale("ar"),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.transparent,

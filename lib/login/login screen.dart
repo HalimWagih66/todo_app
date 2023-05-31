@@ -10,6 +10,7 @@ import 'package:todo_app/register%20screen/validation%20Email.dart';
 import 'package:todo_app/shared/components/dialog/dialog%20utils.dart';
 import '../provider/auth_provider.dart';
 import '../shared/components/TextFormField/custom_form_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   static String routeName = "LoginScreen";
@@ -40,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
           )),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Create Account"),
+          title: Text(AppLocalizations.of(context)!.login),
         ),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 10),
@@ -53,21 +54,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.27,
                   ),
-                  Text("Welcome Back!",
+                  Text(AppLocalizations.of(context)!.welcome_back,
                       style: Theme.of(context).textTheme.bodyLarge),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.04,
                   ),
                   CustomFormField(
-                    textLabel: "E-mail Address",
+                    textLabel: AppLocalizations.of(context)!.email_address,
                     inputField: emailController,
                     functionValidate: (text) {
                       if (text?.isEmpty == true ||
                           text?.trim().isEmpty == true) {
-                        return "Please Enter E-mail Address";
+                        return AppLocalizations.of(context)!.please_enter_email_address;
                       }
                       if (!ValidationEmail.isEmail(text!)) {
-                        return "Please enter the email correctly";
+                        return AppLocalizations.of(context)!.please_enter_the_email_correctly;
                       }
                     },
                     BorderField: UnderlineInputBorder(
@@ -81,16 +82,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 15,
                   ),
                   CustomFormField(
-                    textLabel: "Password",
+                    textLabel: AppLocalizations.of(context)!.password,
                     inputField: passwordController,
                     functionValidate: (text) {
                       if (text == null ||
                           text?.isEmpty == true ||
                           text?.trim().isEmpty == true) {
-                        return "Please Enter Password";
+                        return AppLocalizations.of(context)!.please_enter_password;
                       }
                       if (text!.length < 6) {
-                        return "Please enter a password that is more than 6 digits";
+                        return AppLocalizations.of(context)!.please_enter_a_password_that_is_more_than_6_digits;
                       }
                     },
                     BorderField: UnderlineInputBorder(
@@ -120,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Login",
+                          Text(AppLocalizations.of(context)!.login,
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 18)),
                           Icon(Icons.arrow_forward_outlined,
@@ -145,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: Center(
                           child: Text(
-                        "I don't have an account",
+                            AppLocalizations.of(context)!.i_don_t_have_an_account,
                         textAlign: TextAlign.center,
                       ))),
                 ],
@@ -166,16 +167,16 @@ class _LoginScreenState extends State<LoginScreen> {
       MyUser.User? user = await MyDataBase.readUser(result.user?.uid ?? "");
       var authProvider = Provider.of<AuthProvider>(context,listen: false);
       if(user == null){
-        DialogUtils.showMessage(context: context,title: "Erorr", message: "Dear, this account is not registered before, please read the data again", dialogType: DialogType.error,posActionName: "Ok");
+        DialogUtils.showMessage(context: context,title: AppLocalizations.of(context)!.error, message: AppLocalizations.of(context)!.dear_this_account_is_not_registered_before_please_read_the_data_again, dialogType: DialogType.error,posActionName: "Ok");
         return;
       }
       authProvider.updateUser(user);
       DialogUtils.hideDialog(context);
       DialogUtils.showMessage(
           context: context,
-          title: "Registration Successful",
-          message: "Do you want to go to the home screen",
-          posActionName: "Ok",
+          title: AppLocalizations.of(context)!.registration_successful,
+          message: AppLocalizations.of(context)!.do_you_want_to_go_to_the_home_screen,
+          posActionName: AppLocalizations.of(context)!.ok,
           posAction: () {
             Navigator.pushReplacementNamed(context, HomeScreen.routeName);
           },
@@ -185,18 +186,17 @@ class _LoginScreenState extends State<LoginScreen> {
       if (e.code == 'user-not-found') {
         DialogUtils.showMessage(
             context: context,
-            title: "User Not Found",
-            message: 'No user found for that email.',
+            title: AppLocalizations.of(context)!.user_not_found,
+            message: AppLocalizations.of(context)!.no_user_found_for_that_email,
             dialogType: DialogType.error,
-            nigActionName: "Cancel");
+            nigActionName: AppLocalizations.of(context)!.cancel);
       } else if (e.code == 'wrong-password') {
-        Text('Wrong password provided for that user.');
         DialogUtils.showMessage(
             context: context,
-            title: "wrong password",
-            message: 'Wrong password provided for that user.',
+            title: AppLocalizations.of(context)!.wrong_password,
+            message: AppLocalizations.of(context)!.wrong_password_provided_for_that_user,
             dialogType: DialogType.error,
-            nigActionName: "Cancel");
+            nigActionName: AppLocalizations.of(context)!.cancel);
       }
     }
   }
