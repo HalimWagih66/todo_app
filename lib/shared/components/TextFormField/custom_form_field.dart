@@ -35,7 +35,7 @@ class CustomFormField extends StatelessWidget {
       decoration: InputDecoration(
         labelStyle: TextStyle(
           fontFamily: "Poppins",
-          fontSize: 12,
+          fontSize: 15,
           fontWeight: FontWeight.w400,
           color: Colors.black
         ),
@@ -43,9 +43,9 @@ class CustomFormField extends StatelessWidget {
         focusedBorder: BorderField,
         errorBorder: BorderField?.copyWith(borderSide: BorderSide(width: 1,style: BorderStyle.solid,color: Colors.red)),
         label: Text(textLabel),
-        prefixIcon: Icon(
+        prefixIcon: prefix_Icon != null ?Icon(
           prefix_Icon,
-        ),
+        ):null,
 
         suffixIcon: IconButton(
           onPressed: (){
