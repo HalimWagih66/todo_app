@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/database/models/task.dart';
 import 'package:todo_app/database/my_database.dart';
 import 'package:todo_app/provider/auth_provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../format/format_date.dart';
 import '../../shared/components/TextFormField/custom_form_field.dart';
 
@@ -28,7 +28,7 @@ class _ShowModalBottomSheetState extends State<ShowModalBottomSheet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text("Add Task",
+            Text(AppLocalizations.of(context)!.add_task,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium),
             SizedBox(
@@ -36,11 +36,11 @@ class _ShowModalBottomSheetState extends State<ShowModalBottomSheet> {
             ),
             CustomFormField(
               suffix_Icon: null,
-              textLabel: "Enter Your Task Title",
+              textLabel:AppLocalizations.of(context)!.enter_your_task_title,
               inputField: titleController,
               functionValidate: (text) {
                 if (text?.isEmpty == true || text?.trim().isEmpty == true) {
-                  return "Please Enter title";
+                  return AppLocalizations.of(context)!.please_enter_title;
                 }
               },
               BorderField: UnderlineInputBorder(
@@ -55,11 +55,11 @@ class _ShowModalBottomSheetState extends State<ShowModalBottomSheet> {
               suffix_Icon: null,
               minLines: 1,
               maxLines: 2,
-              textLabel: "Enter Your Task Description",
+              textLabel: AppLocalizations.of(context)!.enter_your_task_description,
               inputField: descController,
               functionValidate: (text) {
                 if (text?.isEmpty == true || text?.trim().isEmpty == true) {
-                  return "Please Enter description";
+                  return AppLocalizations.of(context)!.please_Enter_description;
                 }
               },
               BorderField: UnderlineInputBorder(
@@ -69,7 +69,7 @@ class _ShowModalBottomSheetState extends State<ShowModalBottomSheet> {
             SizedBox(
               height: MediaQuery.of(context).size.height * .04,
             ),
-            Text("Select Date", style: Theme.of(context).textTheme.bodyMedium),
+            Text(AppLocalizations.of(context)!.select_date, style: Theme.of(context).textTheme.bodyMedium),
             GestureDetector(
               onTap: () {
             showDatePickerSelectedDate(context);
@@ -89,7 +89,7 @@ class _ShowModalBottomSheetState extends State<ShowModalBottomSheet> {
                 addTask(context);
               },
               child: Text(
-                "Add Task",
+                AppLocalizations.of(context)!.add_task,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(

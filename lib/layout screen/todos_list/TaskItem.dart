@@ -5,7 +5,7 @@ import 'package:todo_app/database/my_database.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/provider/auth_provider.dart';
 import 'package:todo_app/shared/components/dialog/dialog%20utils.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../database/models/task.dart';
 
 class TaskItem extends StatelessWidget {
@@ -18,7 +18,6 @@ class TaskItem extends StatelessWidget {
     //double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
         color: Colors.white,
@@ -30,15 +29,17 @@ class TaskItem extends StatelessWidget {
           extentRatio: .25,
           children: [
             SlidableAction(
+              borderRadius: BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)),
                 onPressed: (buildContext) {
                   deleteTask(context);
                 },
-                label: "Delete",
+                label: AppLocalizations.of(context)!.delete,
                 backgroundColor: Colors.red,
                 icon: Icons.delete),
           ],
         ),
         child: Container(
+          padding: EdgeInsets.all(12),
           child: Row(
             children: [
               Container(
