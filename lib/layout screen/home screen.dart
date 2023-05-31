@@ -13,8 +13,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedItem = 0;
   List<Widget> taps = [
-    SettingsTap(),
     TodosList_Tap(),
+    SettingsTap(),
+  ];
+  List<String> titleTaps = [
+    "TO Do List",
+    "Settings",
   ];
   @override
   Widget build(BuildContext context) {
@@ -22,15 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color(0xffDFECDB),
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text("Todo List"),
+        title: Text(titleTaps[selectedItem]),
       ),
       body: taps[selectedItem],
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             showModalBottomSheetAddTask();
           },
-          child: Icon(Icons.add)
-      ),
+          child: Icon(Icons.add)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         elevation: 15,
@@ -52,8 +55,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void showModalBottomSheetAddTask() {
-    showModalBottomSheet(context: context, builder: (buildContext) {
-      return ShowModalBottomSheet();
-    });
+    showModalBottomSheet(
+        context: context,
+        builder: (buildContext) {
+          return ShowModalBottomSheet();
+        },
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(13), topLeft: Radius.circular(13))));
   }
 }

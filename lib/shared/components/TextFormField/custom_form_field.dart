@@ -11,6 +11,8 @@ class CustomFormField extends StatelessWidget {
   String fontFamily;
   InputBorder? BorderField;
   Function? onPressedsuffix_Icon;
+  int maxLines;
+  int minLines;
   CustomFormField(
       {required this.inputField,
       required this.functionValidate,
@@ -21,7 +23,9 @@ class CustomFormField extends StatelessWidget {
       this.suffix_Icon,
       this.fontFamily = "Poppins",
        this.BorderField,
-        this.onPressedsuffix_Icon
+        this.onPressedsuffix_Icon,
+        this.maxLines = 1,
+        this.minLines = 1,
       });
 
   @override
@@ -31,6 +35,8 @@ class CustomFormField extends StatelessWidget {
       obscureText: obscure_Text,
       controller: inputField,
       validator: functionValidate,
+      maxLines: maxLines,
+      minLines: minLines,
       style: TextStyle(fontFamily: fontFamily),
       decoration: InputDecoration(
         labelStyle: TextStyle(
