@@ -49,6 +49,8 @@ class DialogUtils {
       btnOkOnPress: posActionName != null ?() {
         posAction?.call();
       }:null,
+      btnOkText: posActionName,
+      btnCancelText: nigActionName,
     )..show();
   }
 }

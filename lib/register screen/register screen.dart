@@ -1,8 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/database/models/user.dart' as MyUser;
 import 'package:todo_app/login/login%20screen.dart';
+import 'package:todo_app/provider/auth_provider.dart';
 import 'package:todo_app/register%20screen/validation%20Email.dart';
+import '../database/my_database.dart';
 import '../shared/components/TextFormField/custom_form_field.dart';
 import '../shared/components/dialog/dialog utils.dart';
 
@@ -206,11 +210,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (formKey.currentState?.validate() == false) return;
     try {
       DialogUtils.dialogLoading(context);
-      var credential = await FirebaseAuth.instance
+      var result = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
+      MyUser.User user = MyUser.User(id: result.user?.uid ?? "",email: emailController.text,name: fullNameController.text);
+      MyDataBase.addUser(result.user?.uid ?? "", user);
+      var authProvider = Provider.of<AuthProvider>(context,listen: false);
+      authProvider.updateUser(user);
       DialogUtils.hideDialog(context);
       DialogUtils.showMessage(
           context: context,message:  "Your account has been successfully registered",
@@ -219,9 +227,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        DialogUtils.showMessage(context: context,title: "weak password",message: "The password provided is too weak.",dialogType: DialogType.warning);
+        DialogUtils.showMessage(context: context,title: "weak password",message: "The password provided is too weak.",dialogType: DialogType.error);
       } else if (e.code == 'email-already-in-use') {
-        DialogUtils.showMessage(context: context,title: "Email",message: "The account already exists for that email.",dialogType: DialogType.warning);
+        DialogUtils.showMessage(context: context,title: "Email",message: "The account already exists for that email.",dialogType: DialogType.error);
       }
     } catch (e) {
       DialogUtils.showMessage(context: context,title: "something went error",message: e.toString(),dialogType: DialogType.error);
