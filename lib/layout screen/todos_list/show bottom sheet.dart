@@ -7,12 +7,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../format/format_date.dart';
 import '../../shared/components/TextFormField/custom_form_field.dart';
 
-class ShowModalBottomSheet extends StatefulWidget {
+class ShowModalBottomSheetAddTask extends StatefulWidget {
   @override
-  State<ShowModalBottomSheet> createState() => _ShowModalBottomSheetState();
+  State<ShowModalBottomSheetAddTask> createState() => _ShowModalBottomSheetAddTaskState();
 }
 
-class _ShowModalBottomSheetState extends State<ShowModalBottomSheet> {
+class _ShowModalBottomSheetAddTaskState extends State<ShowModalBottomSheetAddTask> {
   TextEditingController titleController = TextEditingController();
 
   TextEditingController descController = TextEditingController();

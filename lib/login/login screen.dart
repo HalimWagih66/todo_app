@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color(0xffDFECDB),
           image: DecorationImage(
             image: AssetImage(
                 "assets/images/register screen/register_background.png"),
@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: ElevatedButton.styleFrom(
                       padding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 33),
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color(0xffDFECDB),
                       elevation: 20,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),

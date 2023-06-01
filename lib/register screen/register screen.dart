@@ -37,7 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color(0xffDFECDB),
           image: DecorationImage(
             image: AssetImage(
                 "assets/images/register screen/register_background.png"),
@@ -175,6 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ElevatedButton(onPressed: () {
                     createAccount();
                   }, child: Container(
+                    color: Color(0xffDFECDB),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -187,7 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
                           vertical: 15, horizontal: 33),
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color(0xffDFECDB),
                       elevation: 20,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
