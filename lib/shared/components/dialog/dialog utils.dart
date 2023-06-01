@@ -1,6 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
+import '../../../provider/provider_application.dart';
 
 class DialogUtils {
   static dialogLoading(BuildContext context) {
@@ -38,10 +41,13 @@ class DialogUtils {
     String? nigActionName,
     Function? nigAction,
   }) {
+    var appProvider = Provider.of<ProviderApplication>(context,listen: false);
     AwesomeDialog(
+      dialogBackgroundColor: appProvider.getColorApplication(),
       context: context,
       dialogType: dialogType,
       title: title,
+      titleTextStyle: Theme.of(context).textTheme.bodyLarge,
       animType: AnimType.rightSlide,
       desc: message,
       btnCancelOnPress: nigActionName != null? () {

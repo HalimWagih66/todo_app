@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/layout%20screen/settings%20tap/settings_tap.dart';
 import 'package:todo_app/layout%20screen/todos_list/show%20bottom%20sheet.dart';
 import 'package:todo_app/layout%20screen/todos_list/todosList_tap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../provider/provider_application.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = "HomeScreen";
@@ -19,27 +23,32 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+     var appProvider = Provider.of<ProviderApplication>(context);
     List<String> titleTaps = [
       AppLocalizations.of(context)!.to_do_list,
       AppLocalizations.of(context)!.settings,
     ];
     return Scaffold(
-      backgroundColor: Color(0xffDFECDB),
+      backgroundColor: appProvider.getColorApplication(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(titleTaps[selectedItem]),
       ),
       body: taps[selectedItem],
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showModalBottomSheetAddTask();
-          },
-          child: Icon(Icons.add)),
+      floatingActionButton: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: appProvider.isDarkEnabled() == true ? Colors.black:Color(0xffDFECDB),
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: FloatingActionButton(
+            onPressed: () {
+              showModalBottomSheetAddTask();
+            },
+            child: Icon(Icons.add)),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        elevation: 15,
-        shape: CircularNotchedRectangle(),
-        notchMargin: 8,
         child: BottomNavigationBar(
           currentIndex: selectedItem,
           onTap: (index) {
@@ -47,8 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
             setState(() {});
           },
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.menu), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: ""),
+            BottomNavigationBarItem(icon: Icon(Icons.menu), label: "",backgroundColor: appProvider.isDarkEnabled() == true?Colors.black:Colors.white),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: "",backgroundColor: appProvider.isDarkEnabled() == true?Colors.black:Colors.white),
           ],
         ),
       ),
@@ -62,8 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return ShowModalBottomSheetAddTask();
         },
         elevation: 5,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(13), topLeft: Radius.circular(13))));
+      backgroundColor: Colors.transparent
+    );
   }
 }

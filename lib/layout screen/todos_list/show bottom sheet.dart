@@ -5,6 +5,7 @@ import 'package:todo_app/database/my_database.dart';
 import 'package:todo_app/provider/auth_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../format/format_date.dart';
+import '../../provider/provider_application.dart';
 import '../../shared/components/TextFormField/custom_form_field.dart';
 
 class ShowModalBottomSheetAddTask extends StatefulWidget {
@@ -21,7 +22,12 @@ class _ShowModalBottomSheetAddTaskState extends State<ShowModalBottomSheetAddTas
 
   @override
   Widget build(BuildContext context) {
+    var appProvider = Provider.of<ProviderApplication>(context);
     return Container(
+      decoration: BoxDecoration(
+          color: appProvider.isDarkEnabled()?Color(0xff141922):Colors.white,
+        borderRadius: BorderRadius.only(topRight: Radius.circular(16),topLeft: Radius.circular(16))
+      ),
       padding: EdgeInsets.all(15),
       child: Form(
         key: formKey,

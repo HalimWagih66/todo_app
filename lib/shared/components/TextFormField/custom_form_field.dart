@@ -43,7 +43,7 @@ class CustomFormField extends StatelessWidget {
           fontFamily: "Poppins",
           fontSize: 15,
           fontWeight: FontWeight.w400,
-          color: Colors.black
+          color: Colors.grey
         ),
         enabledBorder:BorderField?.copyWith(borderSide: BorderSide(width: 1,style: BorderStyle.solid,color: Colors.grey.shade300)),
         focusedBorder: BorderField,

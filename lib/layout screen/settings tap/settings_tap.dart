@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/provider_application.dart';
 import 'bottom sheet language.dart';
 import 'bottom sheet theming.dart';
 class SettingsTap extends StatefulWidget {
@@ -27,6 +29,7 @@ class _SettingsTapState extends State<SettingsTap> {
               margin: EdgeInsets.symmetric(horizontal: 15),
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Theme.of(context).primaryColor,style: BorderStyle.solid,width: 2),
               ),
               child: Row(
@@ -49,6 +52,7 @@ class _SettingsTapState extends State<SettingsTap> {
               margin: EdgeInsets.symmetric(horizontal: 15),
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Theme.of(context).primaryColor,style: BorderStyle.solid,width: 2),
               ),
               child: Row(
@@ -69,17 +73,14 @@ class _SettingsTapState extends State<SettingsTap> {
       return ShowBottomSheetTheming();
     },
         elevation: 5,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(13), topLeft: Radius.circular(13))));
+        backgroundColor: Colors.transparent
+    );
   }
   void showBottomSheetChoiceLanguage(){
     showModalBottomSheet(context: context, builder: (buildContext){
       return ShowBottomSheetLanguage();
     },
         elevation: 5,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(13), topLeft: Radius.circular(13))));
+        backgroundColor: Colors.transparent);
   }
 }

@@ -7,6 +7,7 @@ import 'package:todo_app/provider/auth_provider.dart';
 import 'package:todo_app/shared/components/dialog/dialog%20utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../database/models/task.dart';
+import '../../provider/provider_application.dart';
 
 class TaskItem extends StatelessWidget {
   Task task;
@@ -15,12 +16,13 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appProvider = Provider.of<ProviderApplication>(context);
     //double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
-        color: Colors.white,
+        color: appProvider.isDarkEnabled() == true ? Color(0xff141922):Colors.white,
       ),
       margin: EdgeInsets.only(top: 20,right: 15,left: 15),
       child: Slidable(
@@ -53,7 +55,7 @@ class TaskItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(task.title ??"",style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).primaryColor),),
+                    Text(task.title ??"",style: Theme.of(context).textTheme.bodyLarge),
                     SizedBox(
                       height: 20,
                     ),
