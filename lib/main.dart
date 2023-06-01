@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         HomeScreen.routeName:(context)=>HomeScreen(),
         SplashScreen.routeName:(context)=>SplashScreen(),
       },
-      initialRoute: SplashScreen.routeName,
+      initialRoute: LoginScreen.routeName,
       localizationsDelegates: [
         AppLocalizations.delegate, // Add this line
         GlobalMaterialLocalizations.delegate,
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English
         Locale('ar'), // arabic
       ],
-      locale: Locale("ar"),
+      locale: Locale("en"),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.transparent,
