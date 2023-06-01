@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/provider/auth_provider.dart';
+import 'package:todo_app/provider/provider_application.dart';
 import 'package:todo_app/register%20screen/register%20screen.dart';
 import 'package:todo_app/splash%20screen/splash%20screen.dart';
 import 'firebase_options.dart';
@@ -16,8 +17,11 @@ void main()async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(ChangeNotifierProvider(
-    create: (context) => AuthProvider(),
-      child: MyApp()
+    create: (context) => ProviderApplication(),
+    child: ChangeNotifierProvider(
+      create: (context) => AuthProvider(),
+        child: MyApp()
+    ),
   ),
   );
 }
@@ -25,6 +29,7 @@ void main()async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var appProvider = Provider.of<ProviderApplication>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
@@ -33,7 +38,7 @@ class MyApp extends StatelessWidget {
         HomeScreen.routeName:(context)=>HomeScreen(),
         SplashScreen.routeName:(context)=>SplashScreen(),
       },
-      initialRoute: LoginScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       localizationsDelegates: [
         AppLocalizations.delegate, // Add this line
         GlobalMaterialLocalizations.delegate,
@@ -44,7 +49,8 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English
         Locale('ar'), // arabic
       ],
-      locale: Locale("en"),
+      themeMode: appProvider.isDarkEnabled() == true ? ThemeMode.dark:ThemeMode.light,
+      locale: Locale(appProvider.getLanguageCode()),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.transparent,
@@ -59,7 +65,8 @@ class MyApp extends StatelessWidget {
              titleTextStyle: TextStyle(
                color: Colors.white,
                fontFamily: "Poppins",
-               fontSize: 20,
+               fontSize: 26,
+               letterSpacing: 2,
                fontWeight: FontWeight.bold
              ),
       ),
@@ -68,7 +75,7 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w800,
             fontSize: 23,
             fontFamily: "Poppins",
-            color: Colors.black
+              color: Colors.blue
           ),
           bodyMedium: TextStyle(
               fontWeight: FontWeight.w500,
@@ -84,7 +91,47 @@ class MyApp extends StatelessWidget {
           ),
         )
       ),
-
+      darkTheme: ThemeData(
+          primaryColor: Colors.blue,
+          scaffoldBackgroundColor: Colors.transparent,
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            unselectedIconTheme: IconThemeData(color: Colors.grey),
+              selectedIconTheme: IconThemeData(color: Colors.blue),
+              elevation: 0,
+              backgroundColor: Color(0xff141922),
+          ),
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+            color: Colors.transparent,
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+                color: Colors.black,
+                fontFamily: "Poppins",
+                fontSize: 24,
+                fontWeight: FontWeight.bold
+            ),
+          ),
+          textTheme: TextTheme(
+            bodyLarge: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 23,
+                fontFamily: "Poppins",
+                color: Colors.blue
+            ),
+            bodyMedium: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                fontFamily: "Poppins",
+                color: Colors.white
+            ),
+            bodySmall: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
+                fontFamily: "Poppins",
+                color: Colors.white
+            ),
+          )
+      ),
     );
   }
 }

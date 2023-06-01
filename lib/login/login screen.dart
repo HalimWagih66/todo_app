@@ -9,6 +9,7 @@ import 'package:todo_app/register%20screen/register%20screen.dart';
 import 'package:todo_app/register%20screen/validation%20Email.dart';
 import 'package:todo_app/shared/components/dialog/dialog%20utils.dart';
 import '../provider/auth_provider.dart';
+import '../provider/provider_application.dart';
 import '../shared/components/TextFormField/custom_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -31,9 +32,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var appProvider = Provider.of<ProviderApplication>(context);
     return Container(
       decoration: BoxDecoration(
-          color: Color(0xffDFECDB),
+          color: appProvider.getColorApplication(),
           image: DecorationImage(
             image: AssetImage(
                 "assets/images/register screen/register_background.png"),
@@ -132,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: ElevatedButton.styleFrom(
                       padding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 33),
-                      backgroundColor: Color(0xffDFECDB),
+                      backgroundColor: appProvider.getColorApplication(),
                       elevation: 20,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
