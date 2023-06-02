@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../provider/provider_application.dart';
 typedef FunctionValidate = String? Function(String?);
 class CustomFormField extends StatelessWidget {
   TextEditingController inputField;
@@ -30,6 +33,7 @@ class CustomFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appProvider = Provider.of<ProviderApplication>(context);
     return TextFormField(
       keyboardType: textInputType,
       obscureText: obscure_Text,
@@ -37,7 +41,8 @@ class CustomFormField extends StatelessWidget {
       validator: functionValidate,
       maxLines: maxLines,
       minLines: minLines,
-      style: TextStyle(fontFamily: fontFamily),
+      style: TextStyle(fontFamily: fontFamily,color: appProvider.isDarkEnabled()?Color(
+          0xffdadada):Colors.black,letterSpacing: 1.5,),
       decoration: InputDecoration(
         labelStyle: TextStyle(
           fontFamily: "Poppins",
@@ -50,7 +55,7 @@ class CustomFormField extends StatelessWidget {
         errorBorder: BorderField?.copyWith(borderSide: BorderSide(width: 1,style: BorderStyle.solid,color: Colors.red)),
         label: Text(textLabel),
         prefixIcon: prefix_Icon != null ?Icon(
-          prefix_Icon,
+          prefix_Icon,color: Colors.grey,
         ):null,
 
         suffixIcon: IconButton(
@@ -62,6 +67,7 @@ class CustomFormField extends StatelessWidget {
           },
           icon: Icon(
             suffix_Icon,
+            color: Colors.grey,
           ),
         ),
       ),

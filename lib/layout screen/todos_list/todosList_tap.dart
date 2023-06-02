@@ -5,10 +5,8 @@ import 'package:todo_app/database/my_database.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/provider/auth_provider.dart';
 import 'TaskItem.dart';
-
 class TodosList_Tap extends StatelessWidget {
   @override
-  Task task = Task(title: "title", desc: "desc", dateTime: DateTime.fromMillisecondsSinceEpoch(1680277362000));
   Widget build(BuildContext context) {
     var authProvider= Provider.of<AuthProvider>(context);
     return Column(

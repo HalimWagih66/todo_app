@@ -1,8 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-
 import '../../provider/provider_application.dart';
 
 class ShowBottomSheetLanguage extends StatefulWidget {
@@ -29,7 +26,7 @@ class _ShowBottomSheetLanguageState extends State<ShowBottomSheetLanguage> {
 
               });
             },
-            child: appProvider.getLanguageCode() == "en"?selectedItem("English"):unSelectedItem("English"),
+            child: appProvider.currentLanguage == "en"?selectedItem("English"):unSelectedItem("English"),
           ),
           SizedBox(height: 20,),
           InkWell(
@@ -38,7 +35,7 @@ class _ShowBottomSheetLanguageState extends State<ShowBottomSheetLanguage> {
               setState(() {
               });
             },
-            child: appProvider.getLanguageCode() == "ar"?selectedItem("عربي"):unSelectedItem("عربي"),
+            child: appProvider.currentLanguage == "ar"?selectedItem("عربي"):unSelectedItem("عربي"),
           ),
         ],
       ),

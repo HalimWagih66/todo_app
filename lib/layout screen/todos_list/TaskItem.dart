@@ -7,13 +7,13 @@ import 'package:todo_app/provider/auth_provider.dart';
 import 'package:todo_app/shared/components/dialog/dialog%20utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../database/models/task.dart';
+import '../../format/format_date.dart';
 import '../../provider/provider_application.dart';
+
 
 class TaskItem extends StatelessWidget {
   Task task;
-
   TaskItem(this.task);
-
   @override
   Widget build(BuildContext context) {
     var appProvider = Provider.of<ProviderApplication>(context);
@@ -31,7 +31,8 @@ class TaskItem extends StatelessWidget {
           extentRatio: .25,
           children: [
             SlidableAction(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)),
+              borderRadius: appProvider.currentLanguage == "ar"?BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)):
+        BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15)),
                 onPressed: (buildContext) {
                   deleteTask(context);
                 },
@@ -48,18 +49,29 @@ class TaskItem extends StatelessWidget {
                   margin: EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: Theme.of(context).primaryColor),
+                      color: task.isDone == true?Colors.green:Colors.blue),
                   width: 5,
                   height: height * .12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(task.title ??"",style: Theme.of(context).textTheme.bodyLarge),
+                    Text(task.title ??"",style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: task.isDone == true?Colors.green:Colors.blue)),
                     SizedBox(
-                      height: 20,
+                      height: 12,
                     ),
-                    Text(task.desc ?? "",style: Theme.of(context).textTheme.bodySmall),
+                    Text(task.desc ?? "",style: Theme.of(context).textTheme.bodySmall?.copyWith(color: task.isDone == true?Colors.green:Colors.white)),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.access_time,
+                          color: Colors.grey,
+                          size: 14,
+                        ),
+                        SizedBox(width: 6,),
+                        Text(FormDate.formTaskDateTime(task.dateTime),style: TextStyle(color: Colors.grey,fontSize: 13),textDirection: TextDirection.rtl,),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -67,10 +79,17 @@ class TaskItem extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 7, horizontal: 21),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Theme.of(context).primaryColor),
-                child: Image(
-                  image: AssetImage(
-                      "assets/images/Layout screen/todoList tap/Icon-check.png"),
+                    color: task.isDone == true
+                        ? Colors.green
+                        : Colors.blue),
+                child: InkWell(
+                  onTap: (){
+                    isDoneTask(context);
+                  },
+                  child: Image(
+                    image: AssetImage(
+                        "assets/images/Layout screen/todoList tap/Icon-check.png"),
+                  ),
                 ),
               ),
             ],
@@ -80,18 +99,24 @@ class TaskItem extends StatelessWidget {
     );
   }
 
+  Future<void>isDoneTask(BuildContext context)async{
+    task.isDone = true;
+    var authProvider = await Provider.of<AuthProvider>(context,listen: false);
+    MyDataBase.isDoneTask(authProvider.currentUser?.id??"", task);
+  }
+
   void deleteTask(BuildContext context) {
     DialogUtils.showMessage(
         context: context,
         title: "Warning",
         message: "Are you sure to delete the task?",
         dialogType: DialogType.warning,
-        posActionName: "Yes",
-        posAction: () {
-          var authProvider = Provider.of<AuthProvider>(context);
-          MyDataBase.deleteTask(authProvider.currentUser?.id ?? "", task.id ?? "");
+        posActionName: "No",
+        nigActionName: "Yes",
+        nigAction: () async{
+          var authProvider = Provider.of<AuthProvider>(context,listen: false);
+          await MyDataBase.deleteTask(authProvider.currentUser?.id ?? "", task.id ?? "");
         },
-      nigActionName: "No"
     );
   }
 }

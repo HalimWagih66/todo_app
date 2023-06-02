@@ -24,7 +24,7 @@ class _ShowBottomSheetThemingState extends State<ShowBottomSheetTheming> {
         children: [
           InkWell(
             onTap: (){
-              appProvider.changeTheme("light");
+              appProvider.changeTheme(ThemeMode.light);
               setState(() {
 
               });
@@ -34,7 +34,7 @@ class _ShowBottomSheetThemingState extends State<ShowBottomSheetTheming> {
           SizedBox(height: 20,),
           InkWell(
             onTap: (){
-              appProvider.changeTheme("dark");
+              appProvider.changeTheme(ThemeMode.dark);
               setState(() {
 
               });

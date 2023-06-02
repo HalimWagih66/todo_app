@@ -119,22 +119,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       login();
                     },
-                    child: Container(
-                      child: Row(
+                    child:Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(AppLocalizations.of(context)!.login,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 18)),
+                              style:Theme.of(context).textTheme.bodyMedium?.copyWith(color: appProvider.isDarkEnabled()?Colors.black:Colors.grey)),
                           Icon(Icons.arrow_forward_outlined,
-                              color: Colors.grey),
+                              color: appProvider.isDarkEnabled()?Colors.black:Colors.grey),
                         ],
-                      ),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 33),
-                      backgroundColor: appProvider.getColorApplication(),
+                      backgroundColor: appProvider.isDarkEnabled() ? Theme.of(context).primaryColor:Color(0xffDFECDB),
                       elevation: 20,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -161,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() async {
+
     if (formKey.currentState?.validate() == false) return;
     try {
       DialogUtils.dialogLoading(context);
@@ -173,6 +171,8 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
       authProvider.updateUser(user);
+      var appProvider = Provider.of<ProviderApplication>(context,listen: false);
+      appProvider.changeLoginInUser(false);
       DialogUtils.hideDialog(context);
       DialogUtils.showMessage(
           context: context,

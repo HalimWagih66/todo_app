@@ -2,10 +2,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/provider/auth_provider.dart';
 import 'package:todo_app/provider/provider_application.dart';
 import 'package:todo_app/register%20screen/register%20screen.dart';
 import 'package:todo_app/splash%20screen/splash%20screen.dart';
+import 'package:todo_app/storge%20local/cash_Helper.dart';
 import 'firebase_options.dart';
 import 'layout screen/home screen.dart';
 import 'login/login screen.dart';
@@ -13,14 +15,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
+  CashHelper.prefs = await SharedPreferences.getInstance();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(ChangeNotifierProvider(
-    create: (context) => ProviderApplication(),
+    create: (context) => AuthProvider(),
     child: ChangeNotifierProvider(
-      create: (context) => AuthProvider(),
-        child: MyApp()
+      create: (context) => ProviderApplication(),
+        child: MyApp(),
     ),
   ),
   );
@@ -49,8 +52,8 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English
         Locale('ar'), // arabic
       ],
-      themeMode: appProvider.isDarkEnabled() == true ? ThemeMode.dark:ThemeMode.light,
-      locale: Locale(appProvider.getLanguageCode()),
+      themeMode: appProvider.currentTheme,
+      locale: Locale(appProvider.currentLanguage),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.transparent,

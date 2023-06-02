@@ -176,21 +176,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       .height * .07,),
                   ElevatedButton(onPressed: () {
                     createAccount();
-                  }, child: Container(
-                    color: Color(0xffDFECDB),
-                    child: Row(
+                  }, child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(AppLocalizations.of(context)!.create_account,
-                            style: TextStyle(color: Colors.grey, fontSize: 18)),
-                        Icon(Icons.arrow_forward_outlined, color: Colors.grey),
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: appProvider.isDarkEnabled()?Colors.black:Colors.grey)),
+                        Icon(Icons.arrow_forward_outlined, color: appProvider.isDarkEnabled()?Colors.black:Colors.grey),
                       ],
                     ),
-                  ),
+
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
                           vertical: 15, horizontal: 33),
-                      backgroundColor: appProvider.getColorApplication(),
+                      backgroundColor: appProvider.isDarkEnabled() ? Theme.of(context).primaryColor:Color(0xffDFECDB),
                       elevation: 20,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -223,6 +221,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       MyDataBase.addUser(result.user?.uid ?? "", user);
       var authProvider = Provider.of<AuthProvider>(context,listen: false);
       authProvider.updateUser(user);
+      var appProvider = Provider.of<ProviderApplication>(context,listen: false);
+      appProvider.changeLoginInUser(false);
       DialogUtils.hideDialog(context);
       DialogUtils.showMessage(
           context: context,message:  AppLocalizations.of(context)!.your_account_has_been_successfully_registered,

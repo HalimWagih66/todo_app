@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
-
-import '../../provider/provider_application.dart';
 import 'bottom sheet language.dart';
 import 'bottom sheet theming.dart';
 class SettingsTap extends StatefulWidget {
@@ -76,7 +73,7 @@ class _SettingsTapState extends State<SettingsTap> {
         backgroundColor: Colors.transparent
     );
   }
-  void showBottomSheetChoiceLanguage(){
+  void showBottomSheetChoiceLanguage()async{
     showModalBottomSheet(context: context, builder: (buildContext){
       return ShowBottomSheetLanguage();
     },

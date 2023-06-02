@@ -7,17 +7,19 @@ import '../../../provider/provider_application.dart';
 
 class DialogUtils {
   static dialogLoading(BuildContext context) {
+    var appProvider = Provider.of<ProviderApplication>(context,listen: false);
     showDialog(
       context: context,
       builder: (context) {
         return Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
           child: AlertDialog(
+            backgroundColor:
+            appProvider.isDarkEnabled()?Color(0xff141922):Colors.white,
             content: Row(
               children: [
                 CircularProgressIndicator(),
                 SizedBox(width: 14),
-                Text(AppLocalizations.of(context)!.loading),
+                Text(AppLocalizations.of(context)!.loading,style: TextStyle(color: appProvider.isDarkEnabled()?Colors.grey:Colors.white,)),
               ],
             ),
           ),
@@ -41,21 +43,26 @@ class DialogUtils {
     String? nigActionName,
     Function? nigAction,
   }) {
-    var appProvider = Provider.of<ProviderApplication>(context,listen: false);
+    var appProvider = Provider.of<ProviderApplication>(context, listen: false);
     AwesomeDialog(
-      dialogBackgroundColor: appProvider.getColorApplication(),
+      dialogBackgroundColor:
+          appProvider.isDarkEnabled() ? Color(0xff141922) : Colors.white,
       context: context,
       dialogType: dialogType,
       title: title,
       titleTextStyle: Theme.of(context).textTheme.bodyLarge,
       animType: AnimType.rightSlide,
       desc: message,
-      btnCancelOnPress: nigActionName != null? () {
-        nigAction?.call();
-      }:null,
-      btnOkOnPress: posActionName != null ?() {
-        posAction?.call();
-      }:null,
+      btnCancelOnPress: nigActionName != null
+          ? () {
+              nigAction?.call();
+            }
+          : null,
+      btnOkOnPress: posActionName != null
+          ? () {
+              posAction?.call();
+            }
+          : null,
       btnOkText: posActionName,
       btnCancelText: nigActionName,
     )..show();

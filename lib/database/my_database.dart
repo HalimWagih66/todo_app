@@ -33,6 +33,9 @@ class MyDataBase{
     task.id = newTask.id;
     return newTask.set(task);
   }
+  static Future<void> isDoneTask(String uId,Task task)async{
+    await collectionTask(uId).doc(task.id).update(task.toFireStore());
+  }
   static Future<User?> readUser(String uId)async{
     var collectionReference = collectionUser();
     var documentSnapshot = await collectionReference.doc(uId).get();
