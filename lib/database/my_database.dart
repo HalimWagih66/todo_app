@@ -33,6 +33,9 @@ class MyDataBase{
     task.id = newTask.id;
     return newTask.set(task);
   }
+  static Future<void> isDoneTask(String uId,Task task)async{
+    await collectionTask(uId).doc(task.id).update(task.toFireStore());
+  }
   static Future<User?> readUser(String uId)async{
     var collectionReference = collectionUser();
     var documentSnapshot = await collectionReference.doc(uId).get();
@@ -41,7 +44,7 @@ class MyDataBase{
   static Future<void> deleteTask(String uId,String taskId){
     return collectionTask(uId).doc(taskId).delete();
   }
-  static Stream<QuerySnapshot<Task>> readTasks(String uId){
-    return collectionTask(uId).snapshots();
+  static Stream<QuerySnapshot<Task>> readTasksRealTime(String uId,int dateFilter){
+    return collectionTask(uId).where('date',isEqualTo: dateFilter).snapshots();
   }
 }

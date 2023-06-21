@@ -9,9 +9,11 @@ import 'package:todo_app/register%20screen/register%20screen.dart';
 import 'package:todo_app/register%20screen/validation%20Email.dart';
 import 'package:todo_app/shared/components/dialog/dialog%20utils.dart';
 import '../provider/auth_provider.dart';
-import '../provider/provider_application.dart';
+import '../provider/application_provider.dart';
 import '../shared/components/TextFormField/custom_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../shared/style/color application/colors_application.dart';
 
 class LoginScreen extends StatefulWidget {
   static String routeName = "LoginScreen";
@@ -24,18 +26,18 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isHidePassword = true;
 
   IconData eyePassword = Icons.remove_red_eye;
-  TextEditingController emailController = TextEditingController(text: "halemwagih6@gmail.com");
+  TextEditingController emailController = TextEditingController();
 
-  TextEditingController passwordController = TextEditingController(text: "1234567890");
+  TextEditingController passwordController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    var appProvider = Provider.of<ProviderApplication>(context);
+    var appProvider = Provider.of<ApplicationProvider>(context);
     return Container(
       decoration: BoxDecoration(
-          color: appProvider.getColorApplication(),
+          color: ColorApp.getColorApplication(context),
           image: DecorationImage(
             image: AssetImage(
                 "assets/images/register screen/register_background.png"),
@@ -119,22 +121,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       login();
                     },
-                    child: Container(
-                      child: Row(
+                    child:Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(AppLocalizations.of(context)!.login,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 18)),
+                              style:Theme.of(context).textTheme.bodyMedium?.copyWith(color: ColorApp.isDarkEnabled(context)?Colors.black:Colors.grey)),
                           Icon(Icons.arrow_forward_outlined,
-                              color: Colors.grey),
+                              color: ColorApp.isDarkEnabled(context)?Colors.black:Colors.grey),
                         ],
-                      ),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 33),
-                      backgroundColor: appProvider.getColorApplication(),
+                      backgroundColor: ColorApp.isDarkEnabled(context) ? Theme.of(context).primaryColor:Color(0xffDFECDB),
                       elevation: 20,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -161,6 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() async {
+
     if (formKey.currentState?.validate() == false) return;
     try {
       DialogUtils.dialogLoading(context);
@@ -173,6 +173,8 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
       authProvider.updateUser(user);
+      var appProvider = Provider.of<ApplicationProvider>(context,listen: false);
+      appProvider.changeLoginInUser(false);
       DialogUtils.hideDialog(context);
       DialogUtils.showMessage(
           context: context,

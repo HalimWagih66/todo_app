@@ -8,9 +8,10 @@ import 'package:todo_app/login/login%20screen.dart';
 import 'package:todo_app/provider/auth_provider.dart';
 import 'package:todo_app/register%20screen/validation%20Email.dart';
 import '../database/my_database.dart';
-import '../provider/provider_application.dart';
+import '../provider/application_provider.dart';
 import '../shared/components/TextFormField/custom_form_field.dart';
 import '../shared/components/dialog/dialog utils.dart';
+import '../shared/style/color application/colors_application.dart';
 
 class RegisterScreen extends StatefulWidget {
   static String routeName = "RegisterScreen";
@@ -36,10 +37,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var appProvider = Provider.of<ProviderApplication>(context);
+    var appProvider = Provider.of<ApplicationProvider>(context);
     return Container(
       decoration: BoxDecoration(
-          color: appProvider.getColorApplication(),
+          color: ColorApp.getColorApplication(context),
           image: DecorationImage(
             image: AssetImage(
                 "assets/images/register screen/register_background.png"),
@@ -176,21 +177,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       .height * .07,),
                   ElevatedButton(onPressed: () {
                     createAccount();
-                  }, child: Container(
-                    color: Color(0xffDFECDB),
-                    child: Row(
+                  }, child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(AppLocalizations.of(context)!.create_account,
-                            style: TextStyle(color: Colors.grey, fontSize: 18)),
-                        Icon(Icons.arrow_forward_outlined, color: Colors.grey),
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: ColorApp.isDarkEnabled(context)?Colors.black:Colors.grey)),
+                        Icon(Icons.arrow_forward_outlined, color: ColorApp.isDarkEnabled(context)?Colors.black:Colors.grey),
                       ],
                     ),
-                  ),
+
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
                           vertical: 15, horizontal: 33),
-                      backgroundColor: appProvider.getColorApplication(),
+                      backgroundColor: ColorApp.isDarkEnabled(context) ? Theme.of(context).primaryColor:Color(0xffDFECDB),
                       elevation: 20,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -223,20 +222,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
       MyDataBase.addUser(result.user?.uid ?? "", user);
       var authProvider = Provider.of<AuthProvider>(context,listen: false);
       authProvider.updateUser(user);
+      var appProvider = Provider.of<ApplicationProvider>(context,listen: false);
       DialogUtils.hideDialog(context);
       DialogUtils.showMessage(
           context: context,message:  AppLocalizations.of(context)!.your_account_has_been_successfully_registered,
           dialogType: DialogType.success, posActionName: AppLocalizations.of(context)!.ok, posAction: () {
         Navigator.pushReplacementNamed(context, LoginScreen.routeName);
       });
+      print("register");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        DialogUtils.showMessage(context: context,title: AppLocalizations.of(context)!.weak_password,message: AppLocalizations.of(context)!.the_password_provided_is_too_weak,dialogType: DialogType.error);
+        DialogUtils.showMessage(context: context,title: AppLocalizations.of(context)!.weak_password,message: AppLocalizations.of(context)!.the_password_provided_is_too_weak,dialogType: DialogType.error,posAction: DialogUtils.hideDialog(context),posActionName:AppLocalizations.of(context)?.ok);
       } else if (e.code == 'email-already-in-use') {
-        DialogUtils.showMessage(context: context,title: AppLocalizations.of(context)!.email_address,message: AppLocalizations.of(context)!.the_account_already_exists_for_that_email,dialogType: DialogType.error);
+        DialogUtils.showMessage(context: context,title: AppLocalizations.of(context)!.email_address,message: AppLocalizations.of(context)!.the_account_already_exists_for_that_email,dialogType: DialogType.error,posActionName: AppLocalizations.of(context)?.ok,posAction: DialogUtils.hideDialog(context));
       }
     } catch (e) {
-      DialogUtils.showMessage(context: context,title: AppLocalizations.of(context)!.something_went_error,message: e.toString(),dialogType: DialogType.error);
+      DialogUtils.showMessage(context: context,title: AppLocalizations.of(context)!.something_went_error,message: e.toString(),dialogType: DialogType.error,posActionName: AppLocalizations.of(context)?.ok,posAction: DialogUtils.hideDialog(context));
     }
   }
 }
