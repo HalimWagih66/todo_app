@@ -5,14 +5,8 @@ class CashHelper{
   static Future<void> savedLanguageInSharedPreferences(String saveLanguage)async{
     await prefs.setString("language", saveLanguage);
   }
-  static Future<void> savedThemingInSharedPreferences(String saveTheming)async{
-    await prefs.setString("theme", saveTheming);
-  }
   static String getLanguageSharedPreferences(){
     return prefs.getString("language")??"English";
-  }
-  static String getThemingFromSharedPreferences(){
-    return prefs.getString("theme")??"light";
   }
   static Future<void> savedLoggedInInSharedPreferences(bool loginUser)async{
     await prefs.setBool("login", loginUser);

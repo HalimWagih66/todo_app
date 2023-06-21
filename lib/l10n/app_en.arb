@@ -44,5 +44,20 @@
   "wrong_password_provided_for_that_user": "Wrong password provided for that user.",
   "delete": "Delete",
   "dark": "Dark",
-  "light":"Light"
+  "light":"Light",
+  "edit_task": "Edit Task",
+  "is_done": "Done!",
+  "sign_out": "Sign out",
+  "task_modified_successfully": "Task modified successfully",
+  "mission_added_successfully": "Mission added successfully",
+  "pm": "Pm",
+  "am": "Am",
+  "week": "Week",
+  "month": "Month",
+  "you_don_t_have_any_tasks_yet": "You don't have any Tasks Yet",
+  "the_task_has_been_deleted_successfully": "The task has been deleted successfully",
+  "no": "No",
+  "warning": "Warning",
+  "are_you_sure_to_delete_the_task": "Are you sure to delete the task?",
+  "yes": "Yes"
 }

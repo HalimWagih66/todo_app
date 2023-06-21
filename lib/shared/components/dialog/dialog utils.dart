@@ -3,23 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import '../../../provider/provider_application.dart';
+import '../../../provider/application_provider.dart';
+import '../../style/color application/colors_application.dart';
 
 class DialogUtils {
   static dialogLoading(BuildContext context) {
-    var appProvider = Provider.of<ProviderApplication>(context,listen: false);
+    var appProvider = Provider.of<ApplicationProvider>(context,listen: false);
     showDialog(
       context: context,
       builder: (context) {
         return Container(
           child: AlertDialog(
             backgroundColor:
-            appProvider.isDarkEnabled()?Color(0xff141922):Colors.white,
+            ColorApp.isDarkEnabled(context)?Color(0xff141922):Colors.white,
             content: Row(
               children: [
                 CircularProgressIndicator(),
                 SizedBox(width: 14),
-                Text(AppLocalizations.of(context)!.loading,style: TextStyle(color: appProvider.isDarkEnabled()?Colors.grey:Colors.white,)),
+                Text(AppLocalizations.of(context)!.loading,style: TextStyle(color: ColorApp.isDarkEnabled(context)==true?Colors.white:Colors.black)),
               ],
             ),
           ),
@@ -43,10 +44,11 @@ class DialogUtils {
     String? nigActionName,
     Function? nigAction,
   }) {
-    var appProvider = Provider.of<ProviderApplication>(context, listen: false);
+    var appProvider = Provider.of<ApplicationProvider>(context, listen: false);
     AwesomeDialog(
+      dismissOnTouchOutside: false,
       dialogBackgroundColor:
-          appProvider.isDarkEnabled() ? Color(0xff141922) : Colors.white,
+          ColorApp.isDarkEnabled(context) ? Color(0xff141922) : Colors.white,
       context: context,
       dialogType: dialogType,
       title: title,

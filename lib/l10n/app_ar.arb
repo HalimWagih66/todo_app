@@ -44,5 +44,20 @@
   "wrong_password_provided_for_that_user": "كلمة مرور خاطئة مقدمة لهذا المستخدم.",
   "delete": "حذف",
   "dark": "غامق",
-  "light":"فاتح"
+  "light":"فاتح",
+  "edit_task": "تعديل المهمه",
+  "is_done": "انتهت!",
+  "sign_out": "تسجيل الخروج",
+  "task_modified_successfully": "تم تعديل المهمه بنجاح",
+  "mission_added_successfully": "تمت إضافة المهمة بنجاح",
+  "pm": "م",
+  "am": "ص",
+  "week": "اسبوع",
+  "month": "شهر",
+  "you_don_t_have_any_tasks_yet": "ليس لديك أي مهام حتى الآن",
+  "the_task_has_been_deleted_successfully": "تم حذف المهمة بنجاح",
+  "no": "الغاء",
+  "warning": "تحذير",
+  "are_you_sure_to_delete_the_task": "هل أنت متأكد من حذف المهمة؟",
+  "yes": "موافق"
 }
